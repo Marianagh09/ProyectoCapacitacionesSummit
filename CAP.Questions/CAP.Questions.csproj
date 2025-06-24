@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sif.Rest.Api" Version="8.0.2" />
+    <PackageReference Include="Sif.Security.Ldap" Version="8.0.1-alphaCloud.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CAP.Auth\CAP.Auth.csproj" />
+    <ProjectReference Include="..\CAP.Courses\CAP.Courses.csproj" />
+    <ProjectReference Include="..\CAP.Files\CAP.Files.csproj" />
+    <ProjectReference Include="..\CAP.Modules\CAP.Modules.csproj" />
+    <ProjectReference Include="..\CAP.Quiz\CAP.Quiz.csproj" />
+    <ProjectReference Include="..\CAP.Users\CAP.Users.csproj" />
+  </ItemGroup>
+
+</Project>
