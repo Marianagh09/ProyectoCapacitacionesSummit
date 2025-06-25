@@ -19,7 +19,7 @@ namespace CAP.Courses
 		{
 		}
 
-		protected override ServiceState Process()
+		protected override ServiceState Process()   
 		{
 			ServiceState state = ServiceState.Rejected;
 			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fCurses, this.Connection))
