@@ -22,7 +22,7 @@ namespace CAP.Users
 
 			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fUsers, this.Connection))
 			{
-				this.Dictionary.Sif.JsonResponseObject = command.GetJsonResult(this.Message, "", "", true);
+				this.Dictionary.Sif.JsonResponseObject = command.GetJsonResult(this.Message, "USERS", "USER", true);
 
 				state = ServiceState.Accepted;
 			}

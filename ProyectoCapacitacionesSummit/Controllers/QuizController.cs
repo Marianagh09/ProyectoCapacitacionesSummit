@@ -3,88 +3,76 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Sif;
 using Sif.Rest.Api;
-using System.Collections.Generic;
-using CAP.Users;
+using CAP.Quiz;
 
 namespace ProyectoCapacitacionesSummit.Controllers
 {
-	public class UsersController : SifControllerBase
+	[Route("quiz")]
+	public class QuizController : SifControllerBase
 	{
-
-		[HttpGet (Name = "Users")]
+		[HttpGet ("InfoQuiz")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult GetUsers(DataDict dictionary)
+		public IActionResult GetInfoQuiz(DataDict dictionary)
 		{
 			this.Dictionary = dictionary;
-			_ = this.StartService(new GetUsersBusiness(this.Dictionary));
+			_ = this.StartService(new GetInfoQuizBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpGet (Name  = "SpecificUser")]
+		[HttpPost ("NewQuiz")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult GetByUserId(DataDict dictionary)
+		public IActionResult PostNewQuiz(DataDict dictionary)
 		{
 			this.Dictionary = dictionary;
-			_ = this.StartService(new GetByUserIdBusiness(this.Dictionary));
+			_ = this.StartService(new PostNewQuizBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpPost (Name = "NewUser")]
+		[HttpPut ("UpdateQuiz")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult PostNewUser(DataDict dictionary)
+		public IActionResult PutUpdateQuiz(DataDict dictionary)
 		{
 			this.Dictionary = dictionary;
-			_ = this.StartService(new PostNewUserBusiness(this.Dictionary));
+			_ = this.StartService(new PutUpdateQuizBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpPut (Name = "UserInfo")]
+		[HttpDelete ("DeleteQuiz")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult PutUserInfo(DataDict dictionary)
+		public IActionResult DeleteQuiz(DataDict dictionary)
 		{
 			this.Dictionary = dictionary;
-			_ = this.StartService(new PutUserInfoBusiness(this.Dictionary));
+			_ = this.StartService(new DeleteQuizBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
-		//[HttpDelete (Name = "CourseDelete")]
-		//[Consumes(MediaTypeNames.Application.Json)]
-		//[Produces(MediaTypeNames.Application.Json)]
-		//[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		//public IActionResult DeleteCapacitation(DataDict dictionary)
-		//{
-		//	this.Dictionary = dictionary;
-		//	_ = this.StartService(new DeleteCapacitationBusiness(this.Dictionary));
-		//	return this.Ok(this.SifResponse);
-		//}
-
-		[HttpGet (Name = "CourseByUser")]
+		[HttpPost ("SendAnswers")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult getCourseByUser(DataDict dictionary)
+		public IActionResult PostSendAnswers(DataDict dictionary)
 		{
 			this.Dictionary = dictionary;
-			_ = this.StartService(new GetCourseByUserBusiness(this.Dictionary));
+			_ = this.StartService(new PostSendAnswersBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpGet (Name = "Certificate")]
+		[HttpGet ("GetResult (para usuario o todos)")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult GetCertificate(DataDict dictionary)
+		public IActionResult GetResults(DataDict dictionary)
 		{
 			this.Dictionary = dictionary;
-			_ = this.StartService(new GetCertificateBusiness(this.Dictionary));
+			_ = this.StartService(new GetResultsBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 	}

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sif;
+﻿using Sif;
 using Sif.Security.Ldap;
-using Sif.Services; 
+using Sif.Services;
 
 namespace CAP.Auth
 {
@@ -19,15 +14,35 @@ namespace CAP.Auth
 		{
 			this.Dictionary.Ldap.LdapLogOn = this.Dictionary.Security.UserLogOn;
 			this.Dictionary.Ldap.Password = this.Dictionary.Security.RawPassword;
+
 			ServiceState state = this.StartService(new UserLogOnByAccountNameData(this.Dictionary));
 
 			if (state == ServiceState.Accepted)
 			{
 				// Una vez se haya logueado el usuario, traer la data del usuario para hacer el registro en la db y poder hacer las relaciones
-				var response = this.StartService(new GetUserAttributesData(this.Dictionary));
-				return response;
+				var GetUserAttributeService = new GetUserAttributeService(
+							"LDAP://DC=SUMMIT,DC=com",
+							"SUMMIT\\jusmeg.ldap",
+							"Code.*+1012"
+				);
 
+				var userData = GetUserAttributeService.GetUserBySamAccountName(this.Dictionary.Security.UserLogOn);
+
+				if ( userData != null)
+				{
+					this.Dictionary.Sif.XmlQueryResult =
+						$"<root><organization>{userData.Organization}</organization>" +
+						$"<mail>{userData.Email}</mail>" +
+						$"<fullName>{userData.FullName}</fullName></root>";
+
+					return ServiceState.Accepted;
+				}
+				else
+				{
+					return ServiceState.Rejected;
+				}
 			}
+
 			return state;
 		}
 	}

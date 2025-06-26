@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sif;
-using Sif.Accounts;
+﻿using Sif;
 using Sif.Data;
-using Sif.Journal;
 using Sif.Security;
 using Sif.Services;
 
@@ -24,7 +17,7 @@ namespace CAP.Auth
 
 			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fRegistros, this.Connection))
 			{
-				command.AddParameter(this.Dictionary.Security, DataDictSecurity.TellerIdName, this.Dictionary.Security.TellerId);
+				command.AddParameter(this.Dictionary.Security, DataDictSecurity.UserIdName, this.Dictionary.Security.UserId);
 				this.Dictionary.Sif.JsonResponseObject = command.GetJsonResult(this.Message, "", "", true);
 
 				state = ServiceState.Accepted;
@@ -33,6 +26,6 @@ namespace CAP.Auth
 		}
 
 
-		private static readonly String fRegistros = "Select * from CAP.Access_users where userId = " + DataDictSecurity.ParTellerId;
+		private static readonly String fRegistros = "Select * from CAP.Access_users where userId = " + DataDictSecurity.ParUserId;
 	}
 }

@@ -7,9 +7,10 @@ using CAP.Courses;
 
 namespace ProyectoCapacitacionesSummit.Controllers
 {
+	[Route("Courses")]
 	public class CoursesController : SifControllerBase
 	{
-		[HttpGet (Name = "GetCourses")]
+		[HttpGet ("GetCourses")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
@@ -20,7 +21,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpGet (Name = "GetInfoByCourse")]
+		[HttpGet ("GetInfoByCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
@@ -31,7 +32,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpPost (Name = "NewCourse")]
+		[HttpPost ("NewCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
@@ -42,7 +43,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpPut (Name = "UpdateCourse")]
+		[HttpPut ("UpdateCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
@@ -53,7 +54,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpDelete (Name = "DeleteCourse")]
+		[HttpDelete ("DeleteCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
@@ -64,7 +65,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpPost (Name = "AssignedCourse")]
+		[HttpPost ("AssignedCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
@@ -75,7 +76,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpPut (Name = "EndModule")]
+		[HttpPut ("EndModule")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]

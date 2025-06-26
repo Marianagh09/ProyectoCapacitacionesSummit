@@ -16,7 +16,12 @@ namespace CAP.Auth
 
 		protected override ServiceState Process()
 		{
-			return this.StartService(new GetUserData(this.Dictionary));
+			ServiceState state = ServiceState.Rejected;
+			GetUserData service = new GetUserData(this.Dictionary);
+			state = service.StartService();
+
+			//ServiceState state = this.StartService(new GetUserData(this.Dictionary));
+			return state;
 		}
 	}
 }
