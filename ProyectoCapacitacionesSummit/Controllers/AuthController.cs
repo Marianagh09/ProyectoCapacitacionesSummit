@@ -31,7 +31,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			this.Dictionary.Security.UserLogOn = user.Email;
 			this.Dictionary.Security.RawPassword = user.Name;
 			_ = this.StartService(new LogOnBusiness(this.Dictionary));
-			return this.Ok(this.SifResponse);
+			return this.Ok(new SifResponseDto {JsonResponseObject = this.SifResponse.JsonResponseObject, Message = this.SifResponse.Message});
 		}
 
 

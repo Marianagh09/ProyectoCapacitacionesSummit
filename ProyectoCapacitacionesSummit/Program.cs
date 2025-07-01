@@ -1,4 +1,3 @@
-
 namespace ProyectoCapacitacionesSummit
 {
     public class Program
@@ -7,6 +6,16 @@ namespace ProyectoCapacitacionesSummit
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Configure CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngular", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -23,11 +32,11 @@ namespace ProyectoCapacitacionesSummit
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowAngular");
             app.UseHttpsRedirection();
 
+
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();
