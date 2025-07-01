@@ -34,8 +34,6 @@ namespace CAP.Auth
 				{
 					//this.Dictionary.Sif.JsonResponseObject = $"{userData.Username}, {userData.Email}, {userData.Organization}, {userData.Role}";
 					this.Dictionary.Sif.JsonResponseObject = JsonSerializer.Serialize(userData);
-					
-
 					return ServiceState.Accepted;
 				}
 				else

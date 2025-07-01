@@ -1,9 +1,11 @@
 ﻿using System.Net.Mime;
+using System.Text.Json;
 using CAP.Auth;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoCapacitacionesSummit.Models;
 using Sif;
 using Sif.Rest.Api;
+using Sif.Services;
 
 namespace ProyectoCapacitacionesSummit.Controllers
 {
@@ -31,7 +33,9 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			this.Dictionary.Security.UserLogOn = user.Email;
 			this.Dictionary.Security.RawPassword = user.Name;
 			_ = this.StartService(new LogOnBusiness(this.Dictionary));
-			return this.Ok(new SifResponseDto {JsonResponseObject = this.SifResponse.JsonResponseObject, Message = this.SifResponse.Message});
+			//invocar la clase quue genera el jwt 
+			return this.Ok(new SifWebResponse { JsonResponseObject = JsonSerializer.Deserialize<object>(this.Dictionary.Sif.JsonResponseObject)});
+			//return this.Ok(new SifResponseDto {JsonResponseObject = this.SifResponse.JsonResponseObject, Message = this.SifResponse.Message});
 		}
 
 
