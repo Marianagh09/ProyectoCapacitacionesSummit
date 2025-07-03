@@ -28,8 +28,8 @@ namespace CAP.Auth
 			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fConsulta, this.Connection))
 			{
 				command.AddParameter(this.Dictionary.Security, DataDictSecurity.UserNameName, this.Dictionary.Security.UserName);
-				Int32 rows = command.ExecuteNonQuery(this.Message);
-				if (rows != 0)
+				Object result = command.ExecuteScalar(this.Message);
+				if (result != null && Convert.ToInt32(result) > 0)
 				{
 					existUser = 1; 
 				}
@@ -60,7 +60,7 @@ namespace CAP.Auth
 
 
 
-		private static readonly String fConsulta = " SELECT * FROM CAP.Access_users WHERE email = " + DataDictSecurity.ParUserName;
+		private static readonly String fConsulta = " SELECT COUNT(1) FROM CAP.Access_users WHERE email = " + DataDictSecurity.ParUserName;
 
 		private static readonly String fCreate = "INSERT INTO CAP.Access_users (name, email, rol_Id) VALUES (" + DataDictSecurity.ParNewFirstName + "," +
 		  	DataDictSecurity.ParUserName + "," + 1 +")";

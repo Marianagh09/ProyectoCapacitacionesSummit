@@ -11,7 +11,7 @@ namespace CAP.Auth
 	{
 		public LogOnBusiness(DataDict dataDictionary) : base(dataDictionary)
 		{
-			
+
 		}
 
 		protected override ServiceState Process()
@@ -25,14 +25,16 @@ namespace CAP.Auth
 			{
 				// Una vez se haya logueado el usuario, traer la data del usuario para hacer el registro en la db y poder hacer las relaciones
 				var GetUserAttributeService = new GetUserAttributeService(
-                            "LDAP://srvmedlan.summit.com.co",
-							"jusmeg@summit.com.co",
-							"Code.*+1012"
+							 "LDAP://srvmedlan.summit.com.co",
+							//"jusmeg@summit.com.co",
+							//"Code.*+1012"
+							 this.Dictionary.Ldap.LdapLogOn,
+							 this.Dictionary.Ldap.Password
 				);
 
 				var userData = GetUserAttributeService.GetUserBySamAccountName(this.Dictionary.Security.UserLogOn);
 
-				if ( userData != null)	
+				if (userData != null)
 				{
 					//set dictionary field to be stored in DB
 					this.Dictionary.Security.NewFirstName = userData.FullName;

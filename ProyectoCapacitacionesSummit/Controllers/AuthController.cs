@@ -30,8 +30,8 @@ namespace ProyectoCapacitacionesSummit.Controllers
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
 		public IActionResult PostAuth(User user)
 		{
-			this.Dictionary.Security.UserLogOn = user.Email;
-			this.Dictionary.Security.RawPassword = user.Name;
+			this.Dictionary.Security.UserLogOn = user.UserName;
+			this.Dictionary.Security.RawPassword = user.Password;
 			_ = this.StartService(new LogOnBusiness(this.Dictionary));
 			//invocar la clase quue genera el jwt 
 			return this.Ok(new SifWebResponse { JsonResponseObject = JsonSerializer.Deserialize<object>(this.Dictionary.Sif.JsonResponseObject)});
