@@ -29,7 +29,7 @@ namespace CAP.Auth
 			{
 				command.AddParameter(this.Dictionary.Security, DataDictSecurity.UserNameName, this.Dictionary.Security.UserName);
 				Int32 rows = command.ExecuteNonQuery(this.Message);
-				if (rows > 0)
+				if (rows != 0)
 				{
 					existUser = 1; 
 				}
