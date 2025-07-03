@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Sif;
 using Sif.Rest.Api;
 using CAP.Courses;
+using Microsoft.AspNetCore.Authorization;
+using ProyectoCapacitacionesSummit.Models;
 
 namespace ProyectoCapacitacionesSummit.Controllers
 {
@@ -32,17 +34,22 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
+		[Authorize]
 		[HttpPost ("NewCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult PostNewCourse(DataDict dictionary)
+		public IActionResult PostNewCourse(Course course)
 		{
-			this.Dictionary = dictionary;
+			this.Dictionary.ImEx.Name = course.Title;
+			this.Dictionary.ImEx.Description = course.Description;
+			this.Dictionary.Security.TellerId = course.CreatorId;
+			this.Dictionary.Journal.StartDateTime = course.CreationDate;
 			_ = this.StartService(new PostNewCourseBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
+		[Authorize]
 		[HttpPut ("UpdateCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
@@ -54,6 +61,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
+		[Authorize]
 		[HttpDelete ("DeleteCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
@@ -65,6 +73,7 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
+		[Authorize]
 		[HttpPost ("AssignedCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]

@@ -23,21 +23,52 @@ namespace CAP.Auth
 		{
 			ServiceState state = ServiceState.Rejected;
 
-			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fCreate, this.Connection))
+			Int32 existUser = 0; 
+
+			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fConsulta, this.Connection))
 			{
-				command.AddParameter(this.Dictionary.Security, DataDictSecurity.NewFirstNameName, this.Dictionary.Security.NewFirstName);
 				command.AddParameter(this.Dictionary.Security, DataDictSecurity.UserNameName, this.Dictionary.Security.UserName);
-				command.AddParameter(this.Dictionary.Roles, DataDictRoles.RoleIdName, this.Dictionary.Roles.RoleId);
 				Int32 rows = command.ExecuteNonQuery(this.Message);
 				if (rows > 0)
 				{
-					state = ServiceState.Accepted;
+					existUser = 1; 
 				}
 			}
-			return state;
+
+			if (existUser  == 0)
+			{
+				using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fCreate, this.Connection))
+				{
+					command.AddParameter(this.Dictionary.Security, DataDictSecurity.NewFirstNameName, this.Dictionary.Security.NewFirstName);
+					command.AddParameter(this.Dictionary.Security, DataDictSecurity.UserNameName, this.Dictionary.Security.UserName);
+					//command.AddParameter(this.Dictionary.Roles, DataDictRoles.RoleIdName, this.Dictionary.Roles.RoleId);
+					Int32 rows = command.ExecuteNonQuery(this.Message);
+					if (rows > 0)
+					{
+						state = ServiceState.Accepted;
+					}
+				}
+				return state;
+			}
+			else
+			{
+				state = ServiceState.Accepted;
+			}
+			return state; 
+			
 		}
 
+
+
+		private static readonly String fConsulta = " SELECT * FROM CAP.Access_users WHERE email = " + DataDictSecurity.ParUserName;
+
 		private static readonly String fCreate = "INSERT INTO CAP.Access_users (name, email, rol_Id) VALUES (" + DataDictSecurity.ParNewFirstName + "," +
-		  	DataDictSecurity.ParUserName + "," + DataDictRoles.ParRoleId +")";
+		  	DataDictSecurity.ParUserName + "," + 1 +")";
 	}
 }
+
+
+
+
+
+

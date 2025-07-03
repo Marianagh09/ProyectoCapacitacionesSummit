@@ -33,6 +33,6 @@ namespace CAP.Users
 			return state;
 		}
 
-		private static readonly String fCertificate = "";
+		private static readonly String fCertificate = ""; 
 	}
 }

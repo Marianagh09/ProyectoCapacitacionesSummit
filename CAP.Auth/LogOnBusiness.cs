@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization.Json;
 using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 using Sif;
 using Sif.Security.Ldap;
 using Sif.Services;
@@ -10,6 +11,7 @@ namespace CAP.Auth
 	{
 		public LogOnBusiness(DataDict dataDictionary) : base(dataDictionary)
 		{
+			
 		}
 
 		protected override ServiceState Process()
@@ -32,8 +34,35 @@ namespace CAP.Auth
 
 				if ( userData != null)	
 				{
+					//set dictionary field to be stored in DB
+					this.Dictionary.Security.NewFirstName = userData.FullName;
+					this.Dictionary.Security.UserName = userData.Email;
+					_ = this.StartService(new PostNewUserBusiness(this.Dictionary));
+
+					var configBuilder = new ConfigurationBuilder()
+					.SetBasePath(AppContext.BaseDirectory) // Establece el directorio base de ejecución
+					.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+					IConfiguration manualConfig = configBuilder.Build();
+
+					var jwtService = new StartJWT(manualConfig);
+
 					//this.Dictionary.Sif.JsonResponseObject = $"{userData.Username}, {userData.Email}, {userData.Organization}, {userData.Role}";
-					this.Dictionary.Sif.JsonResponseObject = JsonSerializer.Serialize(userData);
+					String token = jwtService.GenerateToken(userData.Email, userData.FullName, userData.Role);
+
+
+					var responseObject = new
+					{
+						userData.Username,
+						userData.FullName,
+						userData.Email,
+						userData.Organization,
+						userData.Role,
+						Token = token
+					};
+
+					this.Dictionary.Sif.JsonResponseObject = JsonSerializer.Serialize(responseObject);
+
 					return ServiceState.Accepted;
 				}
 				else

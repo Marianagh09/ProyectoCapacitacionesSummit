@@ -4,7 +4,9 @@ using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Sif;
+using Sif.Security;
 
 namespace CAP.Auth
 {
@@ -57,6 +59,7 @@ namespace CAP.Auth
 								Organization = GetProperty(result, "company"),
 								Role = GetProperty(result, "title")
 							};
+							
 							return data;
 						}
 					}

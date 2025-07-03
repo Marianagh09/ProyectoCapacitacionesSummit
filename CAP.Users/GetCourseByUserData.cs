@@ -31,6 +31,9 @@ namespace CAP.Users
 			return state;
 		}
 
-		private static readonly String fCurseUser = "SELECT * FROM "; 
+		private static readonly String fCurseUser = "SELECT u.nombre, c.title, a.state, a.assignament_date  FROM CAP.Assigned_courses a " +
+			"join CAP.Users u on u.id = a.user_Id " +
+			"join CAP.Courses c on c.coursesId = a.course_Id" +
+			"WHERE user_Id = " + DataDictRoles.ParDestinationRoleId; 
 	}
 }

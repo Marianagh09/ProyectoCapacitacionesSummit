@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.17" />
 	  <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.8.0" />
 	  <PackageReference Include="Sif" Version="8.0.2" />
 	  <PackageReference Include="Sif.Accounts.Constants" Version="8.0.2" />
@@ -25,6 +26,7 @@
 	  <PackageReference Include="Sif.SequenceGenerator" Version="8.0.2" />
 	  <PackageReference Include="Sif.Services" Version="8.0.2" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
   </ItemGroup>
 
   <ItemGroup>
