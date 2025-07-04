@@ -32,9 +32,11 @@ namespace ProyectoCapacitacionesSummit.Controllers
 		{
 			this.Dictionary.Security.UserLogOn = user.UserName;
 			this.Dictionary.Security.RawPassword = user.Password;
+
 			_ = this.StartService(new LogOnBusiness(this.Dictionary));
 			//invocar la clase quue genera el jwt 
-			return this.Ok(new SifWebResponse { JsonResponseObject = JsonSerializer.Deserialize<object>(this.Dictionary.Sif.JsonResponseObject)});
+			return this.Ok(this.SifResponse);
+			//return this.Ok(new SifWebResponse { JsonResponseObject = JsonSerializer.Deserialize<object>(this.Dictionary.Sif.JsonResponseObject)});
 			//return this.Ok(new SifResponseDto {JsonResponseObject = this.SifResponse.JsonResponseObject, Message = this.SifResponse.Message});
 		}
 
@@ -43,9 +45,11 @@ namespace ProyectoCapacitacionesSummit.Controllers
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult PostNewUser(DataDict dictionary)
+		public IActionResult PostNewUser(User user)
 		{
-			this.Dictionary = dictionary;
+			//this.Dictionary.Customers.CustomerNames = user.Name;
+			//this.Dictionary.Security.UserLogOn = user.UserName;  
+			//this.Dictionary.Customers.Address = user.Email;
 			_ = this.StartService(new PostNewUserBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
