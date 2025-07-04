@@ -37,8 +37,8 @@ namespace CAP.Auth
 				if (userData != null)
 				{
 					//set dictionary field to be stored in DB
-					this.Dictionary.Security.NewFirstName = userData.FullName;
-					this.Dictionary.Security.UserName = userData.Email;
+					//this.Dictionary.Security.NewFirstName = userData.FullName;
+					//this.Dictionary.Security.UserName = userData.Email;
 					_ = this.StartService(new PostNewUserBusiness(this.Dictionary));
 
 					var configBuilder = new ConfigurationBuilder()
@@ -52,15 +52,25 @@ namespace CAP.Auth
 					//this.Dictionary.Sif.JsonResponseObject = $"{userData.Username}, {userData.Email}, {userData.Organization}, {userData.Role}";
 					String token = jwtService.GenerateToken(userData.Email, userData.FullName, userData.Role);
 
+					this.Dictionary.Sif.LoggedUser = userData.Username;
+					this.Dictionary.Customers.CustomerNames = userData.FullName;
+					this.Dictionary.Customers.Address = userData.Email;
+					this.Dictionary.Roles.RoleName = userData.Role;
+					this.Dictionary.Security.SessionTicket = token;
 
 					var responseObject = new
 					{
-						userData.Username,
-						userData.FullName,
-						userData.Email,
-						userData.Organization,
-						userData.Role,
-						Token = token
+						//userData.Username,
+						//userData.FullName,
+						//userData.Email,
+						//userData.Organization,
+						//userData.Role,
+						//Token = token
+						Username = this.Dictionary.Sif.LoggedUser,
+						FullName = this.Dictionary.Customers.CustomerNames,
+						Email = this.Dictionary.Customers.Address,
+						Role = this.Dictionary.Roles.RoleName,
+						Token = this.Dictionary.Security.SessionTicket
 					};
 
 					this.Dictionary.Sif.JsonResponseObject = JsonSerializer.Serialize(responseObject);
