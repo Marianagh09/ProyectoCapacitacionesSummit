@@ -24,11 +24,11 @@ namespace CAP.Courses
 			ServiceState state = ServiceState.Rejected;
 			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fCurses, this.Connection))
 			{
-				  command.AddParameter(this.Dictionary.ImEx, DataDictImEx.JoinIdName, this.Dictionary.ImEx.JoinId);
-				  command.AddParameter(this.Dictionary.Journal, DataDictJournal.LineStatusName, this.Dictionary.Journal.LineStatus);
+				  //command.AddParameter(this.Dictionary.ImEx, DataDictImEx.JoinIdName, this.Dictionary.ImEx.JoinId);
+				  //command.AddParameter(this.Dictionary.Journal, DataDictJournal.LineStatusName, this.Dictionary.Journal.LineStatus);
 				  command.AddParameter(this.Dictionary.Journal, DataDictJournal.ServiceStartDateTimeName, this.Dictionary.Journal.LineStatus);
 				  command.AddParameter(this.Dictionary.Roles, DataDictRoles.DestinationRoleIdName, this.Dictionary.Roles.DestinationRoleId);
-				  command.AddParameter(this.Dictionary.Security, DataDictSecurity.TellerIdName, this.Dictionary.Security.TellerId);
+				  command.AddParameter(this.Dictionary.ImEx, DataDictImEx.FieldIdName, this.Dictionary.ImEx.FieldId);
 				Int32 rows = command.ExecuteNonQuery(this.Message);
 				if (rows > 0)
 				{
@@ -38,6 +38,9 @@ namespace CAP.Courses
 			}
 		}
 
-		private static readonly String fCurses = ""; 
+		private static readonly String fCurses = "INSERT INTO CAP.assigned_courses" +
+			"(STATE, ASSIGNAMENT_DATE, USER_ID, COURSE_ID) " +
+			"VALUES(0, " + DataDictJournal.ParServiceStartDateTime + ", " + DataDictRoles.ParDestinationRoleId +
+			"," + DataDictImEx.ParFieldId + ")"; 
 	}
 }

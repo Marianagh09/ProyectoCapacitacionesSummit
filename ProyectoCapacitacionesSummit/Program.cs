@@ -4,6 +4,7 @@ using CAP.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Sif.Base;
 namespace ProyectoCapacitacionesSummit
 {
 	public class Program
@@ -11,7 +12,7 @@ namespace ProyectoCapacitacionesSummit
 		public static void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
-
+			_ = ConsoleObserver.Instance;
 			// Configure CORS
 			builder.Services.AddCors(options =>
 			{

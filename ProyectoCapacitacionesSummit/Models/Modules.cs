@@ -4,9 +4,14 @@ namespace ProyectoCapacitacionesSummit.Models
 {
 	public class Modules
 	{
-		public String? Type { get; set; }
-		public String? Description { get; set; }
-		public Int32 CourseId { get; set; }
+		[JsonProperty("courseTitle")]
+		public string CourseTitle { get; set; }
+
+		[JsonProperty("courseDescription")]
+		public string CourseDescription { get; set; }
+
+		[JsonProperty("id")]
+		public int Id { get; set; }
 
 		[JsonProperty("contentType")]
 		public string ContentType { get; set; }
@@ -16,5 +21,8 @@ namespace ProyectoCapacitacionesSummit.Models
 
 		[JsonProperty("title")]
 		public string Title { get; set; }
+
+		[JsonProperty("description")]
+		public string Description { get; set; }
 	}
 }

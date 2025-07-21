@@ -17,6 +17,7 @@ namespace CAP.Auth
 		public string Email { get; set; } = "";
 		public string Organization { get; set; } = "";
 		public string Role { get; set; } = "";
+		public string UserId { get;  set; }
 	}
 
 	public class GetUserAttributeService
@@ -46,6 +47,7 @@ namespace CAP.Auth
 						searcher.PropertiesToLoad.Add("mail");
 						searcher.PropertiesToLoad.Add("company");
 						searcher.PropertiesToLoad.Add("title");
+						searcher.PropertiesToLoad.Add("");
 
 
 						var result = searcher.FindOne();
@@ -57,7 +59,8 @@ namespace CAP.Auth
 								FullName = GetProperty(result, "displayName"),
 								Email = GetProperty(result, "mail"),
 								Organization = GetProperty(result, "company"),
-								Role = GetProperty(result, "title")
+								Role = GetProperty(result, "title"),
+								UserId = GetProperty(result, "")
 							};
 							
 							return data;

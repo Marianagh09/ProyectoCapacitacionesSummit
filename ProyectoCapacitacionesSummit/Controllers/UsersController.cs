@@ -5,6 +5,7 @@ using Sif;
 using Sif.Rest.Api;
 using System.Collections.Generic;
 using CAP.Users;
+using ProyectoCapacitacionesSummit.Models;
 
 namespace ProyectoCapacitacionesSummit.Controllers
 {
@@ -67,12 +68,12 @@ namespace ProyectoCapacitacionesSummit.Controllers
 		//}
 
 		[HttpGet ("CourseByUser")]
-		[Consumes(MediaTypeNames.Application.Json)]
-		[Produces(MediaTypeNames.Application.Json)]
+		//[Consumes(MediaTypeNames.Application.Json)]
+		//[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult getCourseByUser(DataDict dictionary)
+		public IActionResult getCourseByUser(String Id)
 		{
-			this.Dictionary = dictionary;
+			this.Dictionary.Security.TellerId = Id;
 			_ = this.StartService(new GetCourseByUserBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}

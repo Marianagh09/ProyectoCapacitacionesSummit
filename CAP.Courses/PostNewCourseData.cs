@@ -1,5 +1,6 @@
 ﻿using Sif;
 using Sif.Data;
+using Sif.Enterprises;
 using Sif.ImEx;
 using Sif.Journal;
 using Sif.Security;
@@ -24,12 +25,15 @@ namespace CAP.Courses
 					command.AddParameter(this.Dictionary.ImEx, DataDictImEx.DescriptionName, this.Dictionary.ImEx.Description);
 					command.AddParameter(this.Dictionary.Security, DataDictSecurity.TellerIdName, this.Dictionary.Security.TellerId);
 					command.AddParameter(this.Dictionary.Journal, DataDictJournal.StartDateTimeName, this.Dictionary.Journal.StartDateTime);
+					var idParam = command.AddParameter(this.Dictionary.Enterprises, DataDictEnterprises.BranchIdName, 0);
 					Int32 rows = command.ExecuteNonQuery(this.Message);
 					if (rows > 0)
 					{
 						state = ServiceState.Accepted;
 					}
-					return state;
+					Int64 newId = Convert.ToInt64(idParam.Value.ToString());
+					this.Dictionary.Enterprises.BranchId = newId;
+					 return state;
 				}
 			}
 			catch (Exception e)
@@ -38,9 +42,8 @@ namespace CAP.Courses
 			}
 		}
 
-		
-
 		private static readonly String fNew = "INSERT INTO CAP.Courses (title, description, creator_Id, creation_date) VALUES ("
-			+ DataDictImEx.ParName + ", " + DataDictImEx.ParDescription + ", " + DataDictSecurity.ParTellerId + ", " + DataDictJournal.ParStartDateTime + ")" ; 
+			+ DataDictImEx.ParName + ", " + DataDictImEx.ParDescription + ", " + DataDictSecurity.ParTellerId + ", " + DataDictJournal.ParStartDateTime + ") RETURNING COURSESID INTO "
+			+ DataDictEnterprises.ParBranchId;
 	}
 }

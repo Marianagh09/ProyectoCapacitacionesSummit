@@ -8,15 +8,15 @@ using Sif.Services;
 
 namespace CAP.Courses
 {
-	public class GetInfoByCourseBusiness : BusinessService
+	public class GetPendignCourseUserBusiness : BusinessService
 	{
-		public GetInfoByCourseBusiness(DataDict dataDictionary) : base(dataDictionary)
+		public GetPendignCourseUserBusiness(DataDict dataDictionary) : base(dataDictionary)
 		{
 		}
 
 		protected override ServiceState Process()
 		{
-			return this.StartService(new GetInfoByCourseData(this.Dictionary));
+			return this.StartService(new GetPendignCourseUserData(this.Dictionary));
 		}
 	}
 }

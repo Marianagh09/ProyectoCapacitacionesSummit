@@ -29,6 +29,6 @@ namespace CAP.Users
 			return state;
 		}
 
-		private static readonly String fUsers = "SELECT * FROM CAP.Access_users"; 
+		private static readonly String fUsers = "SELECT name FROM CAP.Access_users"; 
 	}
 }

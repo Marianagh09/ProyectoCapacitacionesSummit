@@ -6,45 +6,45 @@ using Sif.Rest.Api;
 using CAP.Courses;
 using Microsoft.AspNetCore.Authorization;
 using ProyectoCapacitacionesSummit.Models;
+using Newtonsoft.Json;
 
 namespace ProyectoCapacitacionesSummit.Controllers
 {
 	[Route("Courses")]
 	public class CoursesController : SifControllerBase
 	{
-		[HttpGet ("GetCourses")]
+		[HttpGet ("GetCompletedCourses")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult GetCourses(DataDict dictionary)
+		public IActionResult GetCourses(String Id)
 		{
-			this.Dictionary = dictionary;
-			_ = this.StartService(new GetCoursesBusiness(this.Dictionary));
+			this.Dictionary.Security.TellerId = Id;
+			_ = this.StartService(new GetCompletedCoursesBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpGet ("GetInfoByCourse")]
+		[HttpGet ("GetPendignCourseUser")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult GetInfoByCourse(DataDict dictionary)
+		public IActionResult GetInfoByCourse(String Id)
 		{
-			this.Dictionary = dictionary;
-			_ = this.StartService(new GetInfoByCourseBusiness(this.Dictionary));
+			this.Dictionary.Security.TellerId = Id;
+			_ = this.StartService(new GetPendignCourseUserBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
-		[Authorize]
+		//[Authorize]
 		[HttpPost ("NewCourse")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
 		public IActionResult PostNewCourse(Course course)
 		{
-			this.Dictionary.ImEx.Name = course.Title;
-			this.Dictionary.ImEx.Description = course.Description;
-			this.Dictionary.Security.TellerId = course.CreatorId;
-			this.Dictionary.Journal.StartDateTime = course.CreationDate;
+			
+			this.Dictionary.Sif.JsonResponseObject = JsonConvert.SerializeObject(course);
+			//this.Dictionary.Journal.StartDateTime = course.CreationDate;
 			_ = this.StartService(new PostNewCourseBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
@@ -54,9 +54,12 @@ namespace ProyectoCapacitacionesSummit.Controllers
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult PutUpdateCourse(DataDict dictionary)
+		public IActionResult PutUpdateCourse(Course course)
 		{
-			this.Dictionary = dictionary;
+			this.Dictionary.ImEx.Name = course.Title;
+			this.Dictionary.ImEx.Description = course.Description;
+			this.Dictionary.Security.TellerId = course.CreatorId;
+			this.Dictionary.Journal.StartDateTime = course.CreationDate;
 			_ = this.StartService(new PutUpdateCourseBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
@@ -93,6 +96,18 @@ namespace ProyectoCapacitacionesSummit.Controllers
 		{
 			this.Dictionary = dictionary;
 			_ = this.StartService(new PutEndModuleBusiness(this.Dictionary));
+			return this.Ok(this.SifResponse);
+		}
+
+
+		[HttpGet("GetAssignedCourses")]
+		[Consumes(MediaTypeNames.Application.Json)]
+		[Produces(MediaTypeNames.Application.Json)]
+		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
+		public IActionResult GetAssignedCourses(String userName)
+		{
+			this.Dictionary.Security.UserLogOn = userName;
+			_ = this.StartService(new GetAssignedCoursesByUserIdBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 

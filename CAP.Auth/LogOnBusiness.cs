@@ -37,8 +37,8 @@ namespace CAP.Auth
 				if (userData != null)
 				{
 					//set dictionary field to be stored in DB
-					//this.Dictionary.Security.NewFirstName = userData.FullName;
-					//this.Dictionary.Security.UserName = userData.Email;
+					this.Dictionary.Security.NewFirstName = userData.FullName;
+					this.Dictionary.Security.UserName = userData.Email;
 					_ = this.StartService(new PostNewUserBusiness(this.Dictionary));
 
 					var configBuilder = new ConfigurationBuilder()
@@ -57,20 +57,16 @@ namespace CAP.Auth
 					this.Dictionary.Customers.Address = userData.Email;
 					this.Dictionary.Roles.RoleName = userData.Role;
 					this.Dictionary.Security.SessionTicket = token;
+					//this.Dictionary.Security.TellerId = userData.UserId;
 
 					var responseObject = new
 					{
-						//userData.Username,
-						//userData.FullName,
-						//userData.Email,
-						//userData.Organization,
-						//userData.Role,
-						//Token = token
 						Username = this.Dictionary.Sif.LoggedUser,
 						FullName = this.Dictionary.Customers.CustomerNames,
 						Email = this.Dictionary.Customers.Address,
 						Role = this.Dictionary.Roles.RoleName,
-						Token = this.Dictionary.Security.SessionTicket
+						Token = this.Dictionary.Security.SessionTicket, 
+						UserId = this.Dictionary.Security.TellerId
 					};
 
 					this.Dictionary.Sif.JsonResponseObject = JsonSerializer.Serialize(responseObject);

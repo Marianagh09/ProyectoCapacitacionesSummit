@@ -18,7 +18,7 @@ namespace CAP.Auth
 			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fRegistros, this.Connection))
 			{
 				command.AddParameter(this.Dictionary.Security, DataDictSecurity.UserIdName, this.Dictionary.Security.UserId);
-				this.Dictionary.Sif.JsonResponseObject = command.GetJsonResult(this.Message, "", "", true);
+				this.Dictionary.Sif.JsonResponseObject = command.GetJsonResult(this.Message, "Users", "User", true);
 
 				state = ServiceState.Accepted;
 			}
