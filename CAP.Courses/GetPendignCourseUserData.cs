@@ -33,10 +33,11 @@ namespace CAP.Courses
 		private static readonly String fCurses = "SELECT " +
 			"  c.title," +
 			" c.description," +
-			" a.name  creator_name " +
+			" a.name  creator_name, " +
+			" c.COURSESID " +
 			"FROM CAP.Courses c " +
 			"JOIN CAP.Access_users a ON a.USERID = c.CREATOR_ID " +
 			"JOIN CAP.Assigned_courses ass ON ass.COURSE_ID = c.COURSESID " +
-			"WHERE ass.state = 0   AND ass.USER_ID =  " + DataDictSecurity.ParTellerId ;
+			"WHERE ass.state = 0   AND ass.USER_ID =  " + DataDictSecurity.ParTellerId;
 	}
 }

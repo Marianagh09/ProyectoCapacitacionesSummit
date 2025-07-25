@@ -8,15 +8,15 @@ using Sif.Services;
 
 namespace CAP.Courses
 {
-	public class PutEndModuleBusiness : BusinessService
+	public class GetCourseReaderBusiness : BusinessService
 	{
-		public PutEndModuleBusiness(DataDict dataDictionary) : base(dataDictionary)
+		public GetCourseReaderBusiness(DataDict dataDictionary) : base(dataDictionary)
 		{
 		}
 
 		protected override ServiceState Process()
 		{
-			return this.StartService(new PutEndModuleData(this.Dictionary));
+			return this.StartService(new GetCourseReaderData(this.Dictionary));
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,10 +28,12 @@ namespace CAP.Courses
 				command.AddParameter(this.Dictionary.Enterprises, DataDictEnterprises.BranchIdName, this.Dictionary.Enterprises.BranchId);
 				command.AddParameter(this.Dictionary.Agreements, DataDictAgreements.AgreementNameName, this.Dictionary.Agreements.AgreementName);
 				var idParams = command.AddParameter(this.Dictionary.Agreements, DataDictAgreements.AgreementIdName, 0);
+				idParams.DbType = DbType.Int64;
+				idParams.Direction = ParameterDirection.Output;
 				Int32 rows = command.ExecuteNonQuery(this.Message);
 				if (rows > 0)
 				{
-					state = ServiceState.Accepted;
+					state = ServiceState.Accepted; 
 				}
 				Int64 newId = Convert.ToInt64(idParams.Value.ToString());
 				this.Dictionary.Agreements.AgreementId = newId; 
@@ -40,7 +43,9 @@ namespace CAP.Courses
 
 		private static readonly String fModules = "insert into CAP.Modules (type, descripcion, course_id, name)" +
 			"values (" + DataDictAgreements.ParCollectionTypeName + ", " + DataDictAgreements.ParAgreementDescription + ", "
-			+ DataDictEnterprises.ParBranchId + ", " + DataDictAgreements.ParAgreementName + ")" + "Returning ModuleId into " +
-			DataDictAgreements.ParAgreementId; 
+			+ DataDictEnterprises.ParBranchId + ", " + DataDictAgreements.ParAgreementName + ") " + "Returning ModuleId into " +
+			DataDictAgreements.ParAgreementId;
+
+		//DataDictEnterprises.ParBranchId
 	}
 }

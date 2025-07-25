@@ -22,7 +22,8 @@ namespace CAP.Users
 		{
 			ServiceState state = ServiceState.Rejected;
 
-			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fCurseUser, this.Connection))
+			using (
+				SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fCurseUser, this.Connection))
 			{
 				command.AddParameter(this.Dictionary.Security, DataDictSecurity.TellerIdName, this.Dictionary.Security.TellerId);
 				//command.AddParameter(this.Dictionary.Roles, DataDictRoles.DestinationRoleIdName, this.Dictionary.Roles.DestinationRoleId);
@@ -41,7 +42,7 @@ namespace CAP.Users
 		//private static readonly String fCurseUser = "select c.title, c.description, a.name from CAP.Courses  c" +
 		//	"join CAP.Access_users  a on a.userid =" + DataDictSecurity.ParTellerId;
 
-		private static readonly String fCurseUser = @"select c.title, c.description, a.name from CAP.Courses c 
+		private static readonly String fCurseUser = @"select c.title, c.description, a.name, c.CoursesId from CAP.Courses c 
 			join CAP.Access_users  a on a.userid = c.creator_id
 			where Creator_id = " + DataDictSecurity.ParTellerId;
 	}

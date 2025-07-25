@@ -18,7 +18,7 @@ namespace CAP.Courses
 			using (SifDBCommand command = DBFactory.DefaultFactory.NewDBCommand(fFile, this.Connection))
 			{
 				command.AddParameter(this.Dictionary.Enterprises, DataDictEnterprises.BranchNameName, this.Dictionary.Enterprises.BranchName);
-				command.AddParameter(this.Dictionary.Enterprises, DataDictEnterprises.DocumentTypeName, this.Dictionary.Enterprises.DocumentType);
+				command.AddParameter(this.Dictionary.Enterprises, DataDictEnterprises.AcronymName, this.Dictionary.Enterprises.Acronym);
 				command.AddParameter(this.Dictionary.Agreements, DataDictAgreements.AgreementIdName, this.Dictionary.Agreements.AgreementId);
 				Int32 rows = command.ExecuteNonQuery(this.Message);
 				if (rows > 0)
@@ -30,7 +30,7 @@ namespace CAP.Courses
 		}
 
 		private static readonly String fFile = "insert into CAP.Files (filename, fileurl, module_id) values ( "+
-			DataDictEnterprises.ParBranchName + ", " + DataDictEnterprises.ParDocumentType + ", " +
-			DataDictAgreements.ParAgreementId;
+			DataDictEnterprises.ParBranchName + ", " + DataDictEnterprises.ParAcronym + ", " +
+			DataDictAgreements.ParAgreementId + ")";
 	}
 }

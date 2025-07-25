@@ -20,6 +20,10 @@ namespace CAP.Courses
 				this.Dictionary.ImEx.Name = course.Title;
 				this.Dictionary.ImEx.Description = course.Description;
 				this.Dictionary.Security.TellerId = course.CreatorId;
+				///
+				//this.Dictionary.Agreements.CollectionTypeName = "video";
+				//this.Dictionary.Agreements.AgreementDescription = "klsdgjoi";
+				//this.Dictionary.Agreements.AgreementName = "nombre";
 
 				state = this.StartService(new PostNewCourseData(this.Dictionary));
 				if (state == ServiceState.Accepted)
@@ -34,10 +38,15 @@ namespace CAP.Courses
 						}
 
 						//ejecutar por cada módulo
-						this.Dictionary.Agreements.CollectionTypeName = item.Type;
+						this.Dictionary.Agreements.CollectionTypeName = item.ContentType;
 						this.Dictionary.Agreements.AgreementDescription = item.Description;
 						this.Dictionary.Agreements.AgreementName = item.Title;
 						this.StartService(new PostNewModuleData(this.Dictionary));
+						if (!string.IsNullOrEmpty(item.FileUrl) && item.FileUrl != null)
+						{
+							this.Dictionary.Enterprises.Acronym = item.FileUrl;
+							this.StartService(new PostNewFileData(this.Dictionary));
+						}
 
 					}
 				}

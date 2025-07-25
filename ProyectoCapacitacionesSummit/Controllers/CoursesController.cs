@@ -88,14 +88,14 @@ namespace ProyectoCapacitacionesSummit.Controllers
 			return this.Ok(this.SifResponse);
 		}
 
-		[HttpPut ("EndModule")]
+		[HttpGet ("GetCourseReader")]
 		[Consumes(MediaTypeNames.Application.Json)]
 		[Produces(MediaTypeNames.Application.Json)]
 		[ProducesResponseType(typeof(SifWebResponse), StatusCodes.Status200OK)]
-		public IActionResult PutEndModule(DataDict dictionary)
+		public IActionResult PutEndModule(Int32 CourseId)
 		{
-			this.Dictionary = dictionary;
-			_ = this.StartService(new PutEndModuleBusiness(this.Dictionary));
+			this.Dictionary.ImEx.FileId = CourseId; 
+			_ = this.StartService(new GetCourseReaderBusiness(this.Dictionary));
 			return this.Ok(this.SifResponse);
 		}
 
